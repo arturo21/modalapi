@@ -37,6 +37,47 @@ Compatible con [`general.js`](https://cdn.underdevelopment.work/generaljs/genera
 | `modalapi.getConfig(id)`      | Devuelve la configuración actual del modal                                  |
 | `modalapi.getOpenModals()`    | Lista todos los IDs de modales abiertos                                     |
 
+## ⚙️ Opciones disponibles para `modalapi.open()`
+
+| Opción                  | Tipo       | Descripción                                                                 | Valor por defecto         |
+|-------------------------|------------|------------------------------------------------------------------------------|----------------------------|
+| `id`                    | `string`   | Identificador único del modal                                               | `"modal-" + timestamp`     |
+| `title`                 | `string`   | Título que se muestra en el encabezado del modal                            | `""`                       |
+| `content`               | `string`   | HTML o texto que se muestra en el cuerpo del modal                          | `""`                       |
+| `buttons`               | `array`    | Botones personalizados con `label`, `class`, `action`, `closeOnClick`       | `[]`                       |
+| `closable`              | `boolean`  | Muestra botón de cierre (`×`) en el encabezado                              | `true`                     |
+| `overlay`               | `boolean`  | Muestra fondo oscuro detrás del modal                                       | `true`                     |
+| `width`                 | `string`   | Ancho del modal (ej. `"400px"`, `"80%"`)                                    | `"400px"`                  |
+| `animation`             | `string`   | Tipo de animación (`"fade"`, `"slide"`, `"none"`)                           | `"fade"`                   |
+| `closeOnEsc`            | `boolean`  | Permite cerrar el modal con la tecla ESC                                    | `true`                     |
+| `closeOnOutsideClick`   | `boolean`  | Permite cerrar el modal al hacer clic fuera del contenido                   | `true`                     |
+| `onOpen`                | `function` | Callback que se ejecuta al abrir el modal                                   | `null`                     |
+| `onClose`               | `function` | Callback que se ejecuta al cerrar el modal                                  | `null`                     |
+| `onAction`              | `function` | Callback que se ejecuta al presionar cualquier botón del modal              | `null`                     |
+| `meta`                  | `object`   | Objeto libre para almacenar metadata personalizada por modal                | `{}`                       |
+
+## 🔘 Atributos disponibles para cada botón
+
+Cada objeto dentro del array `buttons` en `modalapi.open()` puede tener los siguientes atributos:
+
+| Atributo         | Tipo       | Descripción                                                                 | Valor por defecto |
+|------------------|------------|------------------------------------------------------------------------------|-------------------|
+| `label`          | `string`   | Texto que se muestra en el botón                                            | `""`              |
+| `class`          | `string`   | Clase CSS personalizada para estilizar el botón                             | `"modal-btn"`     |
+| `action`         | `function` | Función que se ejecuta al hacer clic en el botón                            | `null`            |
+| `closeOnClick`   | `boolean`  | Indica si el modal debe cerrarse al hacer clic en el botón                  | `true`            |
+
+## 🧩 Guía visual para armar una ventana modal con gdom.js
+
+Puedes abrir modales directamente desde cualquier elemento usando `g(selector).openModal({...})`.  
+Esto permite una integración declarativa y modular con tu ecosistema `general.js`.
+
+### 🧪 Ejemplo completo
+
+```html
+<button id="btnAbrir">Abrir modal</button>
+
+
 ## 🧪 Ejemplos de uso
 
 ### 📍 Modal básico con botones
@@ -49,6 +90,34 @@ modalapi.open({
     { label: "Sí", class: "btn-yes", action: () => console.log("Confirmado") },
     { label: "Cancelar", class: "btn-cancel" }
   ]
+});
+```
+
+### Cómo crearlo con gdom.js
+```javascript
+g('#btnAbrir').click(() => {
+  g('#btnAbrir').openModal({
+    title: "Bienvenido",
+    content: "<p>Este es un modal generado con gdom.js</p>",
+    buttons: [
+      {
+        label: "Aceptar",
+        class: "btn-primary",
+        action: () => console.log("Aceptado")
+      },
+      {
+        label: "Cerrar",
+        class: "btn-secondary"
+      }
+    ],
+    animation: "slide",
+    closeOnEsc: true,
+    closeOnOutsideClick: true,
+    onOpen: () => console.log("Modal abierto"),
+    onClose: () => console.log("Modal cerrado"),
+    onAction: label => console.log("Botón presionado:", label),
+    meta: { origen: "gdom", tipo: "informativo" }
+  });
 });
 ```
 
