@@ -72,6 +72,20 @@ Cada objeto dentro del array `buttons` en `modalapi.open()` puede tener los sigu
 Puedes abrir modales directamente desde cualquier elemento usando `g(selector).openModal({...})`.  
 Esto permite una integración declarativa y modular con tu ecosistema `general.js`.
 
+## 📦 Changelog
+
+| Versión  | Fecha       | Cambios realizados                                                                 |
+|----------|-------------|------------------------------------------------------------------------------------|
+| `v1.0.0` | 2025-10-05   | Versión inicial con sistema de modales autoejecutable, ligero y sin dependencias  |
+|          |              | Soporte para múltiples modales simultáneos con control de stacking (`z-index`)    |
+|          |              | Animaciones configurables: `fade`, `slide`, o sin animación                       |
+|          |              | Callbacks personalizados: `onOpen`, `onClose`, `onAction`                         |
+|          |              | Cierre por tecla ESC y clic fuera del contenido                                   |
+|          |              | Actualización dinámica con `update(id, updates)`                                  |
+|          |              | Dataset y metadata por modal para trazabilidad y auditoría                        |
+|          |              | Integración declarativa con `g(selector).openModal({...})`                        |
+|          |              | Estilos CSS responsive y personalizables incluidos                                |
+
 ### 🧪 Ejemplo completo
 
 ```html
